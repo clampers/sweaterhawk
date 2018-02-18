@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body>
+<body class="container">
 <h1 th:text="${title}">Default Title</h1>
 
 <p th:unless="${items} and ${items.size()}">No items.</p>
 
-<ul>
-    <li th:each="item : ${items}" th:text="${item}"></li>
-</ul>
+<table class="table">
+
+    <tr>
+    <th>Item Name</th>
+    <th>Item Description</th>
+    </tr>
+
+    <tr th:each="item : ${items}">
+        <td th:text="${item.name}"></td>
+        <td th:text="${item.description}"></td>
+    </tr>
+
+</table>
 
 </body>
 </html>
