@@ -13,10 +13,4 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping(value="add")
-    public String displayAdd(Model model){
-        model.addAttribute("title", "Add");
-        return "add";
-    }
-
 }

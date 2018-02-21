@@ -9,13 +9,15 @@
 <table class="table">
 
     <tr>
-    <th>Item Name</th>
-    <th>Item Description</th>
+        <th>Item Name</th>
+        <th>Item Description</th>
+        <th>Type</th>
     </tr>
 
     <tr th:each="item : ${items}">
         <td th:text="${item.name}"></td>
         <td th:text="${item.description}"></td>
+        <td th:text="${item.type.name}"></td>
     </tr>
 
 </table>
