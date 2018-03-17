@@ -2,6 +2,7 @@ package com.sweaterhawk.sweaterhawk.controllers;
 
 import com.sweaterhawk.sweaterhawk.models.User;
 import com.sweaterhawk.sweaterhawk.models.data.UserDao;
+import com.sweaterhawk.sweaterhawk.models.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +29,25 @@ public class UserController {
     }
 
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public String processAddUserForm(@ModelAttribute @Valid User newUser,
-                                     Errors errors, Model model){
+    public String processAddUserForm(Model model, @ModelAttribute @Valid User newUser,
+                                     Errors errors, String verify){
+        String comparePassword = newUser.getPassword();
         if(errors.hasErrors()){
-            model.addAttribute("title", "Add Item");
+            model.addAttribute("title", "Register a User");
+            model.addAttribute(newUser);
             return "user/useradd";
         }
-        userDao.save(newUser);
-        return "redirect:/";
+        if(comparePassword.equals(verify)){
+            userDao.save(newUser);
+            return "redirect:/item/list";
+        } else {
+            model.addAttribute("title", "Register a User");
+            model.addAttribute("verifyerror", "Password don't match.");
+            model.addAttribute(newUser);
+            newUser.setPassword("");
+            return "user/useradd";
+        }
+
     }
 
     @RequestMapping(value="login", method = RequestMethod.GET)
