@@ -37,4 +37,12 @@ public class UserController {
         userDao.save(newUser);
         return "redirect:/";
     }
+
+    @RequestMapping(value="login", method = RequestMethod.GET)
+    public String displayUserLoginForm(Model model){
+        model.addAttribute("title", "Login");
+        model.addAttribute(new User());
+        return "user/userlogin";
+    }
+
 }
