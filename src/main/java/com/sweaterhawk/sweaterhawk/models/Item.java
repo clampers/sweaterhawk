@@ -26,8 +26,6 @@ public class Item {
     @ManyToOne
     private User user;
 
-    private ItemType type;
-
     public Item(String name, String description) {
         this.name = name;
         this.description = description;
@@ -54,12 +52,13 @@ public class Item {
     public void setDescription(String description) {
         this.description = description;
     }
-    public ItemType getType() {
-        return type;
+
+    public User getUser() {
+        return user;
     }
 
-    public void setType(ItemType type) {
-        this.type = type;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

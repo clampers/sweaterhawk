@@ -11,13 +11,13 @@
     <tr>
         <th>Item Name</th>
         <th>Item Description</th>
-        <th>Type</th>
+        <th>User</th>
     </tr>
 
     <tr th:each="item : ${items}">
         <td th:text="${item.name}"></td>
         <td th:text="${item.description}"></td>
-        <td th:text="${item.type.name}"></td>
+        <td th:text="${item.user.name}"></td>
     </tr>
 
 </table>

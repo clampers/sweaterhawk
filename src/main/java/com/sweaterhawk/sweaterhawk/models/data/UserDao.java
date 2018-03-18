@@ -9,4 +9,6 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface UserDao extends CrudRepository<User, Integer> {
+    User findByName(String name);
+    boolean existsByName(String name);
 }

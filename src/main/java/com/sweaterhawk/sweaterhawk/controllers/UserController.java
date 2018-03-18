@@ -20,7 +20,6 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-
     @RequestMapping(value="add", method = RequestMethod.GET)
     public String displayAddUserForm(Model model){
         model.addAttribute("title", "Register a User");
@@ -48,13 +47,6 @@ public class UserController {
             return "user/useradd";
         }
 
-    }
-
-    @RequestMapping(value="login", method = RequestMethod.GET)
-    public String displayUserLoginForm(Model model){
-        model.addAttribute("title", "Login");
-        model.addAttribute(new User());
-        return "user/userlogin";
     }
 
 }

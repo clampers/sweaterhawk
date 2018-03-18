@@ -1,11 +1,11 @@
 package com.sweaterhawk.sweaterhawk.models;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -26,9 +26,18 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters.")
     private String password;
 
+    @OneToMany
+    @JoinColumn(name = "item_id")
+    private List<Item> items = new ArrayList<>();
+
     public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
+    }
+
+    public User(String name, String password){
+        this.name = name;
         this.password = password;
     }
 

@@ -1,8 +1,9 @@
 package com.sweaterhawk.sweaterhawk.controllers;
 
 import com.sweaterhawk.sweaterhawk.models.Item;
-import com.sweaterhawk.sweaterhawk.models.ItemType;
+import com.sweaterhawk.sweaterhawk.models.User;
 import com.sweaterhawk.sweaterhawk.models.data.ItemDao;
+import com.sweaterhawk.sweaterhawk.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class ItemController {
     @Autowired
     private ItemDao itemDao;
 
+    @Autowired
+    private UserDao userDao;
+
     @RequestMapping(value="list")
     public String index(Model model){
 
@@ -34,17 +38,21 @@ public class ItemController {
     public String displayAddItemForm(Model model){
         model.addAttribute("title", "Add an Item");
         model.addAttribute(new Item());
-        model.addAttribute("itemTypes", ItemType.values());
+        model.addAttribute("users", userDao.findAll());
         return "item/itemadd";
     }
 
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddItemForm(@ModelAttribute @Valid Item newItem,
-                                     Errors errors, Model model){
+                                     Errors errors,
+                                     @RequestParam int userId,
+                                     Model model){
         if(errors.hasErrors()){
             model.addAttribute("title", "Add Item");
             return "item/itemadd";
         }
+        User user = userDao.findOne(userId);
+        newItem.setUser(user);
         itemDao.save(newItem);
         return "redirect:/item/list";
     }
