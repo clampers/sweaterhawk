@@ -38,7 +38,7 @@ public class LoginController {
                 return "redirect:/item/list";
             } else {
                 model.addAttribute("title", "Login");
-                model.addAttribute("previoususer", userName);
+                model.addAttribute("previoususername", userName);
                 model.addAttribute("passworderror", "Incorrect password");
                 return "user/userlogin";
             }

@@ -29,24 +29,31 @@ public class UserController {
 
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddUserForm(Model model, @ModelAttribute @Valid User newUser,
-                                     Errors errors, String verify){
+                                     Errors errors, String verify) {
         String comparePassword = newUser.getPassword();
-        if(errors.hasErrors()){
+        if (userDao.existsByName(newUser.getName())) {
+            model.addAttribute("title", "Register a User");
+            model.addAttribute(newUser);
+            model.addAttribute("userexistserror", "That username already exists. Please try another");
+            return "user/useradd";
+        }
+        if (errors.hasErrors()) {
             model.addAttribute("title", "Register a User");
             model.addAttribute(newUser);
             return "user/useradd";
         }
-        if(comparePassword.equals(verify)){
-            userDao.save(newUser);
-            return "redirect:/item/list";
-        } else {
+        if (!comparePassword.equals(verify)) {
             model.addAttribute("title", "Register a User");
             model.addAttribute("verifyerror", "Password don't match.");
             model.addAttribute(newUser);
             newUser.setPassword("");
             return "user/useradd";
         }
-
+        if (comparePassword.equals(verify) && !userDao.existsByName(newUser.getName())){
+            userDao.save(newUser);
+            return "redirect:/item/list";
+        }
+        return "user/useradd";
     }
 
 }
